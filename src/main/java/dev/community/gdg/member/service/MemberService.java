@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.sun.istack.Nullable;
 import dev.community.gdg.mapping.MemberTagMappingService;
 import dev.community.gdg.member.domain.Member;
 import dev.community.gdg.member.domain.MemberRepository;
@@ -34,9 +33,8 @@ public class MemberService {
 
     public MemberCreateResponse createMember(final MemberCreateRequest createRequest) {
         final List<Tag> tags = tagRepository.findAllById(createRequest.getTagIds());
-        final Member newMember = new Member(createRequest.getNickname());
-        tags.stream().map(tag -> memberTagMappingService.mapping(newMember, tag))
-            .collect(Collectors.toList());
+        final Member newMember = new Member(createRequest.getNickname(), createRequest.getUuid());
+        tags.forEach(tag -> memberTagMappingService.mapping(newMember, tag));
 
         final Member createdMember = memberRepository.save(newMember);
         // TODO: 예외처리 해야함.
@@ -50,14 +48,8 @@ public class MemberService {
 
     public MemberSpecification getMemberInformationMe(final Long id) {
         final Optional<Member> memberOptional = memberRepository.findById(id);
-        final Member member = memberOptional.orElseThrow(() ->
-            new IllegalArgumentException("member is not found"));
-
-        return MemberSpecification.builder()
-            .id(member.getId())
-            .nickname(member.getNickname())
-            .tags(unwrapTags(member))
-            .build();
+        final Member member = memberOptional.orElseThrow(() -> new IllegalArgumentException("member is not found"));
+        return MemberSpecification.from(member);
     }
 
     public Optional<MemberSpecification> getMemberInformationMe(String uuid) {

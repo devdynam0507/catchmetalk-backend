@@ -51,8 +51,9 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	private List<MemberTagMapping> memberTagMappings = new ArrayList<>();
 
-	public Member(final String nickname) {
+	public Member(final String nickname, final String uuid) {
 		this.nickname = nickname;
+		this.uuid = uuid;
 	}
 
 	public void addMemberTagMapping(final MemberTagMapping mapping) {
