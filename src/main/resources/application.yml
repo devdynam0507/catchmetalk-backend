@@ -1,0 +1,5 @@
+spring:
+  mvc:
+    pathmatch.matching-strategy: ANT_PATH_MATCHER
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
