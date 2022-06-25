@@ -34,4 +34,12 @@ public class CommonResponse<T> {
 		return response;
 	}
 
+	public static <U> CommonResponse<U> failure(ResultCode resultCode) {
+		return CommonResponse.<U>builder()
+				.data(null)
+				.code(resultCode)
+				.message(resultCode.name())
+				.build();
+	}
+
 }

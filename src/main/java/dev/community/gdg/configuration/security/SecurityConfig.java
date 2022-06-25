@@ -1,6 +1,7 @@
 package dev.community.gdg.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.community.gdg.common.CommonResponse;
 import dev.community.gdg.common.ResultCode;
 import dev.community.gdg.configuration.jwt.JwtService;
 import dev.community.gdg.member.service.MemberService;
@@ -73,8 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             objectMapper.writeValue(
                                     response.getOutputStream(),
-                                    // TODO: ApiResponse
-                                    ApiResponse.failure(ResultCode.UNAUTHORIZED)
+                                    CommonResponse.failure(ResultCode.UNAUTHORIZED)
                             );
                         })
                 .accessDeniedHandler(
@@ -85,8 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             objectMapper.writeValue(
                                     response.getOutputStream(),
-                                    // TODO: ApiResponse
-                                    ApiResponse.failure(ResultCode.FORBIDDEN)
+                                    CommonResponse.failure(ResultCode.FORBIDDEN)
                             );
                         });
     }

@@ -1,6 +1,7 @@
 package dev.community.gdg.configuration.security;
 
 import dev.community.gdg.configuration.jwt.JwtService;
+import dev.community.gdg.member.dto.MemberSpecification;
 import dev.community.gdg.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,16 +24,15 @@ public class PreAuthTokenProvider implements AuthenticationProvider {
         if (PreAuthenticatedAuthenticationToken.class.isAssignableFrom(authentication.getClass())) {
             final String token = authentication.getPrincipal().toString();
             final Long memberId = jwtService.decode(token);
+            final MemberSpecification memberSpecification;
             try {
-                // TODO: memberService
-//                final Member member = memberService.get(memberId);
+                memberSpecification = memberService.getMemberInformationMe(memberId);
             } catch (Exception e) {
                 log.warn("member not found", e);
                 throw new TokenMissingException("Member not found");
             }
-            return PreAuthenticatedAuthenticationToken(
-                    // TODO
-                    member.memberId,
+            return new PreAuthenticatedAuthenticationToken(
+                    memberSpecification.getId(),
                     "",
                     Collections.singletonList(new SimpleGrantedAuthority(SecurityConfig.MEMBER_ROLE_NAME))
             );
