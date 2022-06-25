@@ -65,13 +65,19 @@ public class MemberService {
         member.setLatitude(updateSpecification.getLatitude());
         member.setLongitude(updateSpecification.getLongitude());
         member.setNickname(updateSpecification.getNickname());
-        final Member updatedMember = memberRepository.save(member);
+
+        // tag 변경
+        member.getMemberTagMappings().clear();
+        Long tagId = updateSpecification.getTagId();
+        Tag tag = tagRepository.findById(tagId)
+                .orElseThrow(() -> new IllegalStateException("Tag not found. tagId: " + tagId));
+        member.addMemberTagMapping(memberTagMappingService.mapping(member, tag));
 
         return MemberUpdateSpecification.builder()
-            .id(updatedMember.getId())
-            .nickname(updatedMember.getNickname())
-            .latitude(updatedMember.getLatitude())
-            .longitude(updatedMember.getLongitude())
+            .id(member.getId())
+            .nickname(member.getNickname())
+            .latitude(member.getLatitude())
+            .longitude(member.getLongitude())
             .build();
     }
 
