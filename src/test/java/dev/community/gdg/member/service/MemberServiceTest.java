@@ -2,10 +2,14 @@ package dev.community.gdg.member.service;
 
 import java.util.Optional;
 
+import dev.community.gdg.mapping.MemberTagMapping;
+import dev.community.gdg.mapping.MemberTagMappingService;
 import dev.community.gdg.member.domain.Member;
 import dev.community.gdg.member.domain.MemberRepository;
 import dev.community.gdg.member.dto.MemberSpecification;
 import dev.community.gdg.member.dto.MemberUpdateSpecification;
+import dev.community.gdg.tag.domain.Tag;
+import dev.community.gdg.tag.domain.TagRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +27,12 @@ class MemberServiceTest {
 
     @Mock
     private MemberRepository memberRepository;
+
+    @Mock
+    private TagRepository tagRepository;
+
+    @Mock
+    private MemberTagMappingService memberTagMappingService;
 
     @Test
     void getMemberInformationMeSuccess() {
@@ -53,14 +63,18 @@ class MemberServiceTest {
             .nickname("test-user2")
             .latitude(127.00001)
             .longitude(64.00001)
+            .tagId(1L)
             .build();
 
         final Member returnTarget = new Member("test-user", "uuid");
         returnTarget.setId(1L);
         when(memberRepository.findById(anyLong()))
             .thenReturn(Optional.of(returnTarget));
-        when(memberRepository.save(any()))
-            .thenReturn(returnTarget);
+        Tag tag = new Tag("tagName");
+        when(tagRepository.findById(anyLong()))
+                .thenReturn(Optional.of(tag));
+        when(memberTagMappingService.mapping(any(), any()))
+                .thenReturn(new MemberTagMapping(returnTarget, tag));
         final MemberUpdateSpecification resultUpdateSpec =
             memberService.updateMember(1L, memberUpdateSpecification);
 
