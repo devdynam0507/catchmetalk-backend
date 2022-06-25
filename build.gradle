@@ -25,6 +25,7 @@ dependencies {
 	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:$jasyptVersion"
 	implementation "com.auth0:java-jwt:$javaJwtVersion"
 	implementation 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

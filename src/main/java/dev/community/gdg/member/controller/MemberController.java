@@ -5,6 +5,8 @@ import java.util.List;
 
 import dev.community.gdg.common.CommonResponse;
 import dev.community.gdg.common.ResultCode;
+import dev.community.gdg.member.domain.Member;
+import dev.community.gdg.member.domain.MemberRepository;
 import dev.community.gdg.member.dto.MemberCreateRequest;
 import dev.community.gdg.member.dto.MemberCreateResponse;
 import dev.community.gdg.member.dto.MemberSpecification;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @PostMapping("/me")
     public CommonResponse<MemberCreateResponse> createMember(
@@ -67,7 +71,9 @@ public class MemberController {
 
 	@GetMapping("/search")
 	public CommonResponse<List<MemberSpecification>> getNearByUsers() {
-		return CommonResponse.success(Collections.emptyList(), ResultCode.SUCCESS);
+        final Long id = 1L;
+        final List<MemberSpecification> users = memberService.getNearbyUsers(id);
+		return CommonResponse.success(users, ResultCode.SUCCESS);
 	}
 
 }

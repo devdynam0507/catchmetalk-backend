@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,7 +42,7 @@ public class Member {
 	private Double longitude = null;
 
 	@CreatedDate
-	private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
@@ -50,7 +51,9 @@ public class Member {
 	private List<MemberTagMapping> memberTagMappings = new ArrayList<>();
 
 	public Member(final String nickname) {
-		this.nickname = nickname;
+	    this.nickname = nickname;
+	    this.createdAt = LocalDateTime.now();
+	    this.updatedAt = LocalDateTime.now();
 	}
 
 	public void addMemberTagMapping(final MemberTagMapping mapping) {

@@ -1,5 +1,6 @@
 package dev.community.gdg.member.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,6 +93,24 @@ public class MemberService {
             .latitude(updatedMember.getLatitude())
             .longitude(updatedMember.getLongitude())
             .build();
+    }
+
+    public List<MemberSpecification> getNearbyUsers(final Long id) {
+        final Optional<Member> memberOptional = memberRepository.findById(id);
+        final Member member = memberOptional.orElseThrow(() ->
+            new IllegalArgumentException("member is not found"));
+
+        if(member.getLatitude() == null || member.getLongitude() == null) {
+            return Collections.emptyList();
+        }
+        final List<Member> members =
+            memberRepository.findNearbyMembers(member.getLatitude(), member.getLongitude(), 5.0);
+        return members.stream().map(m -> MemberSpecification.builder()
+                .id(m.getId())
+                .nickname(m.getNickname())
+                .tags(unwrapTags(m))
+                .build())
+                .collect(Collectors.toList());
     }
 
     private List<TagResponse> unwrapTags(final Member member) {
