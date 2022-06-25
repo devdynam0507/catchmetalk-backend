@@ -62,7 +62,7 @@ class MemberServiceTest {
         when(memberRepository.save(any()))
             .thenReturn(returnTarget);
         final MemberUpdateSpecification resultUpdateSpec =
-            memberService.updateMember(memberUpdateSpecification);
+            memberService.updateMember(1L, memberUpdateSpecification);
 
         assertThat(resultUpdateSpec.getNickname()).isEqualTo("test-user2");
         assertThat(resultUpdateSpec.getLatitude()).isEqualTo(127.00001);

@@ -3,7 +3,6 @@ package dev.community.gdg.tag.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.assertj.core.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.community.gdg.tag.dto.TagSaveRequest;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -22,11 +22,12 @@ import org.springframework.test.web.servlet.ResultActions;
 class TagControllerTest {
 
 	@Autowired
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@Autowired
-	MockMvc mockMvc;
+	private MockMvc mockMvc;
 
+	@WithMockUser(authorities = "MEMBER")
 	@DisplayName("태그 데이터가 제대로 저장이 되는지 테스트")
 	@Test
 	void saveTagTest() throws Exception {
