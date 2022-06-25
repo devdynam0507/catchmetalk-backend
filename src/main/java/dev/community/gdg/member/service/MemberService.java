@@ -1,2 +1,4 @@
-package dev.community.gdg.member.service;public class MemberService {
+package dev.community.gdg.member.service;
+
+public class MemberService {
 }
