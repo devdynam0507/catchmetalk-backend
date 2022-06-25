@@ -1,7 +1,6 @@
 package dev.community.gdg.chatting.room.controller;
 
 import dev.community.gdg.chatting.room.dto.ChatRoomSpecification;
-import dev.community.gdg.chatting.room.dto.ChattingRoomResponse;
 import dev.community.gdg.chatting.room.dto.CreateRoomRequest;
 import dev.community.gdg.chatting.room.service.ChattingRoomService;
 import dev.community.gdg.common.CommonResponse;
