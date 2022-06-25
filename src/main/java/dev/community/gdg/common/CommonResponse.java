@@ -21,6 +21,14 @@ public class CommonResponse<T> {
 			.build();
 	}
 
+	public static <U> CommonResponse<U> success(U data) {
+		return CommonResponse.<U>builder()
+				.data(data)
+				.code(ResultCode.SUCCESS)
+				.message("응답에 성공하였습니다.")
+				.build();
+	}
+
 	public static <U> CommonResponse<U> success(U data, ResultCode resultCode) {
 		final CommonResponse<U> response = success();
 		response.setData(data);
@@ -32,6 +40,14 @@ public class CommonResponse<T> {
 		final CommonResponse<U> response = success(data, resultCode);
 		response.setMessage(message);
 		return response;
+	}
+
+	public static <U> CommonResponse<U> failure(ResultCode resultCode) {
+		return CommonResponse.<U>builder()
+				.data(null)
+				.code(resultCode)
+				.message(resultCode.name())
+				.build();
 	}
 
 }

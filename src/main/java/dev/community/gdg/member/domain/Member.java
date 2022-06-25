@@ -34,6 +34,8 @@ public class Member {
 
 	private String nickname;
 
+	private String uuid;
+
 	@Nullable
 	private Double latitude = null;
 

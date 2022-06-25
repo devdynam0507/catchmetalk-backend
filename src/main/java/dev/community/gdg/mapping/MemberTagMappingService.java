@@ -4,8 +4,10 @@ import dev.community.gdg.member.domain.Member;
 import dev.community.gdg.tag.domain.Tag;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MemberTagMappingService implements MappingService<Member, Tag, MemberTagMapping> {
 
 	@Override

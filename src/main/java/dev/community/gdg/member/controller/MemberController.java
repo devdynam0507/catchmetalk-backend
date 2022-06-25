@@ -5,11 +5,8 @@ import java.util.List;
 
 import dev.community.gdg.common.CommonResponse;
 import dev.community.gdg.common.ResultCode;
-import dev.community.gdg.member.dto.MemberCreateRequest;
-import dev.community.gdg.member.dto.MemberCreateResponse;
-import dev.community.gdg.member.dto.MemberSpecification;
-import dev.community.gdg.member.dto.MemberUpdateCoordinateRequest;
-import dev.community.gdg.member.dto.MemberUpdateSpecification;
+import dev.community.gdg.member.dto.*;
+import dev.community.gdg.member.service.LoginService;
 import dev.community.gdg.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final LoginService loginService;
 
     @PostMapping("/me")
     public CommonResponse<MemberCreateResponse> createMember(
@@ -42,10 +40,10 @@ public class MemberController {
 		return CommonResponse.success(memberSpecification, ResultCode.SUCCESS);
 	}
 
-	// TODO: 로그인 서비스 붙여야함.
 	@PostMapping("/login")
-	public ResponseEntity<CommonResponse<?>> login() {
-		return ResponseEntity.ok(null);
+	public ResponseEntity<CommonResponse<?>> login(LoginRequest loginRequest) {
+		String accessToken = loginService.login(loginRequest.getUuid());
+		return ResponseEntity.ok(CommonResponse.success(accessToken));
 	}
 
 	@PutMapping("/me")
