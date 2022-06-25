@@ -19,15 +19,15 @@ import static org.assertj.core.api.Assertions.*;
 class MemberServiceTest {
 
     @InjectMocks
-    MemberService memberService;
+    private MemberService memberService;
 
     @Mock
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Test
     void getMemberInformationMeSuccess() {
         final Long id = 1L;
-        final Member member = new Member("test-user");
+        final Member member = new Member("test-user", "uuid");
 
         when(memberRepository.findById(anyLong()))
             .thenReturn(Optional.of(member));
@@ -55,7 +55,7 @@ class MemberServiceTest {
             .longitude(64.00001)
             .build();
 
-        final Member returnTarget = new Member("test-user");
+        final Member returnTarget = new Member("test-user", "uuid");
         returnTarget.setId(1L);
         when(memberRepository.findById(anyLong()))
             .thenReturn(Optional.of(returnTarget));
