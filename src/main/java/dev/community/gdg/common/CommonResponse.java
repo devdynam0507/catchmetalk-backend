@@ -21,6 +21,14 @@ public class CommonResponse<T> {
 			.build();
 	}
 
+	public static <U> CommonResponse<U> success(U data) {
+		return CommonResponse.<U>builder()
+				.data(data)
+				.code(ResultCode.SUCCESS)
+				.message("응답에 성공하였습니다.")
+				.build();
+	}
+
 	public static <U> CommonResponse<U> success(U data, ResultCode resultCode) {
 		final CommonResponse<U> response = success();
 		response.setData(data);

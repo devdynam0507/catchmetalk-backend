@@ -19,9 +19,11 @@ import dev.community.gdg.tag.dto.TagResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -56,6 +58,10 @@ public class MemberService {
             .nickname(member.getNickname())
             .tags(unwrapTags(member))
             .build();
+    }
+
+    public Optional<MemberSpecification> getMemberInformationMe(String uuid) {
+        return memberRepository.findByUuid(uuid).map(MemberSpecification::from);
     }
 
     public MemberUpdateSpecification updateMember(final MemberUpdateSpecification updateSpecification) {
