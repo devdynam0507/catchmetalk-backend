@@ -21,7 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation "io.springfox:springfox-boot-starter:$springfoxVersion"
+	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:$jasyptVersion"
 	implementation 'com.h2database:h2'
 
 	compileOnly 'org.projectlombok:lombok'
