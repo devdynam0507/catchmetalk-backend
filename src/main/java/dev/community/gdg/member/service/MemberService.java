@@ -64,11 +64,12 @@ public class MemberService {
         return memberRepository.findByUuid(uuid).map(MemberSpecification::from);
     }
 
-    public MemberUpdateSpecification updateMember(final MemberUpdateSpecification updateSpecification) {
-        // TODO: 중복 코드
-        final Optional<Member> memberOptional = memberRepository.findById(updateSpecification.getId());
-        final Member member = memberOptional.orElseThrow(() ->
-            new IllegalArgumentException("member is not found"));
+    public MemberUpdateSpecification updateMember(
+            final Long memberId,
+            final MemberUpdateSpecification updateSpecification
+    ) {
+        final Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("member is not found"));
         member.setLatitude(updateSpecification.getLatitude());
         member.setLongitude(updateSpecification.getLongitude());
         member.setNickname(updateSpecification.getNickname());
