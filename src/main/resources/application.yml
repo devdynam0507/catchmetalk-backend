@@ -3,3 +3,5 @@ spring:
     pathmatch.matching-strategy: ANT_PATH_MATCHER
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+jwt:
+  secretKey: ENC(B1FgbxTzmlM8GG7iIn1uih22Oy1GJ6mKQDSvqg2QojgDfteR+0IX/qlMkrF/n+L5)
