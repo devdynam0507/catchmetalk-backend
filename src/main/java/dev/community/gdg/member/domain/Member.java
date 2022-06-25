@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,7 +44,7 @@ public class Member {
 	private Double longitude = null;
 
 	@CreatedDate
-	private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
@@ -51,17 +52,19 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	private List<MemberTagMapping> memberTagMappings = new ArrayList<>();
 
+	public Member(final String nickname) {
+        this.nickname = nickname;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
 	public Member(final String nickname, final String uuid) {
-		this.nickname = nickname;
+	    this(nickname);
 		this.uuid = uuid;
 	}
 
 	public void addMemberTagMapping(final MemberTagMapping mapping) {
 		memberTagMappings.add(mapping);
-	}
-
-	public void setMemberTagMappings(List<MemberTagMapping> memberTagMappings) {
-		this.memberTagMappings = memberTagMappings;
 	}
 
 	public void setLatitude(@Nullable Double latitude) {
