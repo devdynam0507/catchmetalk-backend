@@ -13,6 +13,7 @@ public class MemberCreateRequest {
 
 	private String nickname;
 
-	private List<Long> tagIds;
+	private String uuid;
 
+	private List<Long> tagIds;
 }

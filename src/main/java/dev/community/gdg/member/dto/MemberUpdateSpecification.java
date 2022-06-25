@@ -13,5 +13,6 @@ public class MemberUpdateSpecification {
     private String nickname;
     private Double latitude;
     private Double longitude;
+    private Long tagId;
 
 }

@@ -35,6 +35,8 @@ public class Member {
 
 	private String nickname;
 
+	private String uuid;
+
 	@Nullable
 	private Double latitude = null;
 
@@ -51,17 +53,18 @@ public class Member {
 	private List<MemberTagMapping> memberTagMappings = new ArrayList<>();
 
 	public Member(final String nickname) {
-	    this.nickname = nickname;
-	    this.createdAt = LocalDateTime.now();
-	    this.updatedAt = LocalDateTime.now();
+        this.nickname = nickname;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+	public Member(final String nickname, final String uuid) {
+	    this(nickname);
+		this.uuid = uuid;
 	}
 
 	public void addMemberTagMapping(final MemberTagMapping mapping) {
 		memberTagMappings.add(mapping);
-	}
-
-	public void setMemberTagMappings(List<MemberTagMapping> memberTagMappings) {
-		this.memberTagMappings = memberTagMappings;
 	}
 
 	public void setLatitude(@Nullable Double latitude) {

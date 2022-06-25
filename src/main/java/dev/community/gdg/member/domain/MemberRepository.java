@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
@@ -16,5 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findNearbyMembers(@Param("latitude") final Double latitude,
                                    @Param("longitude") final Double longitude,
                                    @Param("distance") final Double distance);
+
+    Optional<Member> findByUuid(String uuid);
 
 }
