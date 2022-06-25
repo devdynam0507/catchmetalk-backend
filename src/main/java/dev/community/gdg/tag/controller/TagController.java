@@ -25,20 +25,20 @@ public class TagController {
 	private final TagService tagService;
 
 	@GetMapping
-	public ResponseEntity<CommonResponse<List<TagResponse>>> getAllTags() {
+	public CommonResponse<List<TagResponse>> getAllTags() {
 		final List<TagResponse> tags = tagService.getTags();
 		final CommonResponse<List<TagResponse>> response = CommonResponse.success(tags,
 			ResultCode.SUCCESS);
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 	@PostMapping
-	public ResponseEntity<CommonResponse<TagResponse>> saveTag(
+	public CommonResponse<TagResponse> saveTag(
 			@RequestBody final TagSaveRequest tagSaveRequest) {
 		final TagResponse saved = tagService.saveTag(tagSaveRequest);
 		final CommonResponse<TagResponse> response = CommonResponse.success(saved,
 			ResultCode.SUCCESS);
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 }

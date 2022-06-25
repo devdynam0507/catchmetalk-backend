@@ -35,4 +35,12 @@ public class Tag {
 		this.tagName = tagName;
 	}
 
+	public void addMemberTagMapping(final MemberTagMapping mapping) {
+	    memberTagMappings.add(mapping);
+    }
+
+    public void setMemberTagMappings(List<MemberTagMapping> memberTagMappings) {
+        this.memberTagMappings = memberTagMappings;
+    }
+
 }
