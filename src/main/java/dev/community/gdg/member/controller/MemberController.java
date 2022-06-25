@@ -71,23 +71,14 @@ public class MemberController {
         return CommonResponse.success(updatedSpecification, ResultCode.SUCCESS);
     }
 
-    @PutMapping("/me/coordinate")
-    public CommonResponse<MemberUpdateSpecification> modifyMyCoordinate(
-            @RequestBody MemberUpdateCoordinateRequest coordinateUpdateRequest,
-			@ApiIgnore Principal principal
-	) {
-        final Long memberId = memberIdResolver.resolveMemberId(principal);
-        final MemberUpdateSpecification updatedSpecification =
-                memberService.updateMemberCoordinateOnly(memberId, coordinateUpdateRequest);
-        return CommonResponse.success(updatedSpecification, ResultCode.SUCCESS);
-    }
-
 	@PutMapping("/me/coordinate")
 	public CommonResponse<MemberUpdateSpecification> modifyMyCoordinate(
-	    @RequestBody MemberUpdateCoordinateRequest coordinateUpdateRequest) {
-        final Long id = 0L; // TODO: 플레이어 아이디 넣어줘야 합니다. (유저 현 좌표 정보 변경)
+	    @RequestBody MemberUpdateCoordinateRequest coordinateUpdateRequest,
+        @ApiIgnore Principal principal
+    ) {
+        final Long memberId = memberIdResolver.resolveMemberId(principal);
         final MemberUpdateSpecification updatedSpecification =
-            memberService.updateMemberCoordinateOnly(id, coordinateUpdateRequest);
+            memberService.updateMemberCoordinateOnly(memberId, coordinateUpdateRequest);
 		return CommonResponse.success(updatedSpecification, ResultCode.SUCCESS);
 	}
 
