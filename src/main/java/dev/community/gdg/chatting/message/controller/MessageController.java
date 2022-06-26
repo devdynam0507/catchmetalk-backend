@@ -21,12 +21,12 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping
-    public List<MessageResponse> getMessages(
+    public CommonResponse<List<MessageResponse>> getMessages(
             @ApiIgnore Principal principal,
          @PathVariable(value = "chattingRoomId") Long chattingRoomId
     ) {
         Long memberId = memberIdResolver.resolveMemberId(principal);
-        return messageService.getMessages(memberId, chattingRoomId);
+        return CommonResponse.success(messageService.getMessages(memberId, chattingRoomId));
     }
 
     @PostMapping
