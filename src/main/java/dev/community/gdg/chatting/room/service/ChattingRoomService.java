@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,5 +37,12 @@ public class ChattingRoomService {
         }
         Optional<ChattingRoom> chattingRoomOptional2 = chattingRoomRepository.findByFirstMember_idAndSecondMember_id(receiverMemberId, senderMemberId);
         return chattingRoomOptional2;
+    }
+
+    public List<ChatRoomSpecification> getChatRooms(Long memberId) {
+        return chattingRoomRepository.findByFirstMember_idOrSecondMember_id(memberId, memberId)
+                .stream()
+                .map(ChatRoomSpecification::from)
+                .collect(Collectors.toList());
     }
 }
