@@ -2,6 +2,8 @@ package dev.community.gdg.chatting.message.controller;
 
 import dev.community.gdg.chatting.message.dto.MessageRequest;
 import dev.community.gdg.chatting.message.dto.MessageResponse;
+import dev.community.gdg.chatting.message.service.MessageService;
+import dev.community.gdg.common.CommonResponse;
 import dev.community.gdg.common.MemberIdResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +18,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageController {
     private final MemberIdResolver memberIdResolver;
+    private final MessageService messageService;
 
     @GetMapping
     public List<MessageResponse> getMessages(
-            @ApiIgnore Principal principal
+            @ApiIgnore Principal principal,
+         @PathVariable(value = "chattingRoomId") Long chattingRoomId
     ) {
         Long memberId = memberIdResolver.resolveMemberId(principal);
-        return Collections.emptyList();
+        return messageService.getMessages(memberId, chattingRoomId);
     }
 
     @PostMapping
-    public MessageResponse sendMessage(
+    public CommonResponse<MessageResponse> sendMessage(
             @RequestBody MessageRequest messageRequest,
-            @ApiIgnore Principal principal
+            @ApiIgnore Principal principal,
+            @PathVariable(value = "chattingRoomId") Long chattingRoomId
     ) {
         Long memberId = memberIdResolver.resolveMemberId(principal);
-        return null;
+        messageService.sendMessage(messageRequest, memberId, chattingRoomId);
+        return CommonResponse.success();
     }
 }
