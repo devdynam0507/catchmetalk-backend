@@ -65,10 +65,12 @@ public class MemberController {
     }
 
     @GetMapping("/search")
-    public CommonResponse<List<MemberSpecification>> getNearByUsers() {
-        final Long id = 1L;
-        final List<MemberSpecification> users = memberService.getNearbyUsers(id);
-        return CommonResponse.success(users, ResultCode.SUCCESS);
+    public CommonResponse<List<MemberSpecification>> getNearByUsers(
+            @ApiIgnore Principal principal
+    ) {
+        final Long memberId = memberIdResolver.resolveMemberId(principal);
+        final List<MemberSpecification> users = memberService.getNearbyUsers(memberId);
+        return CommonResponse.success(users);
     }
 
 }
