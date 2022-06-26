@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/chat-rooms")
@@ -17,6 +18,15 @@ import java.security.Principal;
 public class ChattingRoomController {
     private final ChattingRoomService chattingRoomService;
     private final MemberIdResolver memberIdResolver;
+
+    @GetMapping
+    public CommonResponse<List<ChatRoomSpecification>> getChatRooms(
+            @ApiIgnore Principal principal
+    ) {
+        Long memberId = memberIdResolver.resolveMemberId(principal);
+        List<ChatRoomSpecification> chatRoomSpecifications = chattingRoomService.getChatRooms(memberId);
+        return CommonResponse.success(chatRoomSpecifications);
+    }
 
     @PostMapping
     public CommonResponse<ChatRoomSpecification> getOrCreateRoom(
